@@ -1,0 +1,24 @@
+.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  &--recipes {
+    background-image: url("../../assets/img/recipes.png");
+  }
+
+  &--new {
+    background-image: url("../../assets/img/new.png");
+  }
+
+  &--cart {
+    background-image: url("../../assets/img/cart.png");
+  }
+
+  &--search {
+    background-image: url("../../assets/img/search.png");
+  }
+
+  &--filter {
+    background-image: url("../../assets/img/filter.png");
+  }
+}

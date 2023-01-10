@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react';
-import classes from './Button.module.css';
+import classes from './Button.module.scss';
 
-type ButtonProps = {
+interface IButtonProps {
   children: ReactNode;
-};
-function Button({ children }: ButtonProps): JSX.Element {
+}
+
+function Button({ children }: IButtonProps): JSX.Element {
   return <button className={classes.button}>{children}</button>;
 }
 

@@ -1,0 +1,18 @@
+@import "../../assets/sass/variables";
+
+.link {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  transition: .3s color ease-in-out;
+  color: $color-violet;
+
+  &:hover {
+    color: $color-dark-violet;
+  }
+
+  a {
+    display: inline-block;
+    margin-left: 20px;
+  }
+}

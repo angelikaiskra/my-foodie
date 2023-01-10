@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import './globals.css';
-import App from './App';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+
+import './assets/sass/index.scss';
+
+import store from './store/store';
+import router from './router/router';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Suspense fallback={<div>Error! Please refresh the page</div>}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </Suspense>
   </React.StrictMode>,
   document.querySelector('#root')
 );

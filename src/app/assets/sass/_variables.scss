@@ -1,0 +1,32 @@
+// COLORS
+$color-border-gray: #EDF1F4;
+$color-background-gray: #F7F9F9;
+
+$color-violet: #9891B6;
+$color-dark-violet: #6D5CAC;
+$color-dark: #172938;
+
+// BREAKPOINTS
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+:export {
+  color-border-gray: $color-border-gray;
+  color-background-gray: $color-background-gray;
+  color-font-violet: $color-violet;
+  color-font-dark-violet: $color-dark-violet;
+  color-font-dark: $color-dark;
+  screen-sm-min: $screen-sm-min;
+  screen-md-min: $screen-md-min;
+  screen-lg-min: $screen-lg-min;
+  screen-xl-min: $screen-xl-min;
+}
