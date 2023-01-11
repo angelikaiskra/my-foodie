@@ -5,12 +5,12 @@ import { RouterProvider } from 'react-router-dom';
 
 import './assets/sass/index.scss';
 
-import store from './store/store';
+import { store } from "./store/store";
 import router from './router/router';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback={<div>Error! Please refresh the page</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>

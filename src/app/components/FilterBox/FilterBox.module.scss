@@ -1,41 +1,27 @@
 @import "../../assets/sass/index";
 
 .filterBox {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   position: relative;
   cursor: pointer;
+  max-width: 200px;
+  max-height: 200px;
 
   .bg {
-    position: absolute;
+    display: block;
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
     border-radius: 15px;
     z-index: 1;
-
-    &--breakfast {
-      background-image: url("../../assets/img/breakfast.png");
-    }
-
-    &--mainDish {
-      background-image: url("../../assets/img/mainDish.png");
-    }
-
-    &--lunch {
-      background-image: url("../../assets/img/lunch.png");
-    }
-
-    &--dinner {
-      background-image: url("../../assets/img/dinner.png");
-    }
   }
 
   .overlay {
     position: absolute;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, .25);
     border-radius: 15px;
     z-index: 2;

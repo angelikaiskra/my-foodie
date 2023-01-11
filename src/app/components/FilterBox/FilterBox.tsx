@@ -1,15 +1,15 @@
-import React from 'react';
-import classes from './FilterBox.module.scss';
+import React from "react";
+import classes from "./FilterBox.module.scss";
 
 interface IFilterBoxProps {
-  title: string;
-  image: string;
+  title: string,
+  imageUrl: string,
 }
 
-function FilterBox({ title, image }: IFilterBoxProps): JSX.Element {
+function FilterBox({title, imageUrl}: IFilterBoxProps): JSX.Element {
   return (
     <div className={classes.filterBox}>
-      <div className={`${classes.bg} ${classes['bg--' + image]}`} />
+      <img className={classes.bg} src={imageUrl} alt={title} />
       <div className={classes.overlay} />
       <span className={classes.title}>{title}</span>
     </div>

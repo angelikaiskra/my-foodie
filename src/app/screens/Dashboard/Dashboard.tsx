@@ -1,62 +1,57 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { IRecipe } from "../../types/type";
+import { fetchRecipes } from "../../actions/recipesActions";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
-import classes from './Dashboard.module.scss';
+import classes from "./Dashboard.module.scss";
 
-import Container from '../../components/Container/Container';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import FilterBox from '../../components/FilterBox/FilterBox';
-import RecipeBox from '../../components/RecipeBox/RecipeBox';
+import Container from "../../components/Container/Container";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import FilterBox from "../../components/FilterBox/FilterBox";
+import RecipeBox from "../../components/RecipeBox/RecipeBox";
 
 function Dashboard(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { recipes, isLoading } = useAppSelector(state => state.recipes)
+
+  useEffect(() => {
+       dispatch(fetchRecipes());
+     }, [dispatch]);
+
+  const renderedRecipes = () => {
+    if (isLoading) {
+      return <div>Loading...</div>
+    } else {
+      return recipes.map((recipe: IRecipe) => (
+        <RecipeBox key={recipe.id}
+                   title={recipe.title}
+                   imageUrl={recipe.thumbnail}
+                   prepTime={recipe.prepTime} link={`/przepis/${recipe.slug}`}
+        />
+      ))
+    }
+  }
+
   return (
     <Container>
       <div className={classes.dashboard}>
         <SearchBar />
 
         <section className={classes.filterBoxes}>
-          <FilterBox title={'Śniadanie'} image={'breakfast'} />
-          <FilterBox title={'Obiad'} image={'mainDish'} />
-          <FilterBox title={'Lunch'} image={'lunch'} />
-          <FilterBox title={'Kolacja'} image={'dinner'} />
+          <FilterBox title={"Śniadanie"} imageUrl={"http://localhost:3001/assets/img/breakfast.png"} />
+          <FilterBox title={"Obiad"} imageUrl={"http://localhost:3001/assets/img/mainDish.png"} />
+          <FilterBox title={"Lunch"} imageUrl={"http://localhost:3001/assets/img/lunch.png"} />
+          <FilterBox title={"Kolacja"} imageUrl={"http://localhost:3001/assets/img/dinner.png"} />
         </section>
 
         <section>
-          <h2>Ostatnio dodane</h2>
-          <div className={classes.lastAdded}>
-            <RecipeBox
-              title={'Filety z kurczaka w parmezanowej panierce'}
-              imageUrl={
-                'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/filety-w-parmezanowej-panierce.jpg'
-              }
-              prepTime={15}
-              link={'/przepis/filety-z-kurczaka-w-parmezanowej-parnierce'}
-            />
-            <RecipeBox
-              title={'Filety z kurczaka w parmezanowej panierce'}
-              imageUrl={
-                'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/filety-w-parmezanowej-panierce.jpg'
-              }
-              prepTime={15}
-              link={'/przepis/filety-z-kurczaka-w-parmezanowej-parnierce'}
-            />
-            <RecipeBox
-              title={'Filety z kurczaka w parmezanowej panierce'}
-              imageUrl={
-                'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/filety-w-parmezanowej-panierce.jpg'
-              }
-              prepTime={15}
-              link={'/przepis/filety-z-kurczaka-w-parmezanowej-parnierce'}
-            />
-            <RecipeBox
-              title={'Filety z kurczaka w parmezanowej panierce'}
-              imageUrl={
-                'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/filety-w-parmezanowej-panierce.jpg'
-              }
-              prepTime={15}
-              link={'/przepis/filety-z-kurczaka-w-parmezanowej-parnierce'}
-            />
+          <h2>Wszystkie przepisy</h2>
+          <div className={classes.recipes}>
+            {renderedRecipes()}
           </div>
         </section>
+
+
       </div>
     </Container>
   );

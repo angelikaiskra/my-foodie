@@ -1,0 +1,9 @@
+- infinite scroll in recipes list
+- search
+- filters
+- single recipe screen
+- adding a recipe
+- shopping list
+- unit tests
+- error boundaries
+- lazy loading of photos
