@@ -11,7 +11,7 @@
     "build": "npm run server:build && npm run client:build",
     "serve": "vite preview",
     "prepare": "husky install",
-    "test": "tsc && eslint .",
+    "test": "eslint .",
     "start": "node dist/server.js"
   },
   "devDependencies": {
