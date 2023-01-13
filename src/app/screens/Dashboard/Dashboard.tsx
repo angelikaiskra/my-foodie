@@ -20,7 +20,7 @@ function Dashboard(): JSX.Element {
   const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    dispatch(fetchRecipes(limit, offset));
+    dispatch(fetchRecipes(limit, offset, searchVal));
   }, []);
 
   useEffect(() => {
@@ -30,13 +30,18 @@ function Dashboard(): JSX.Element {
     if (recipes.count !== 0 && recipes.count < offset) return;
 
     console.log("load more recipes, offset " + offset);
-    dispatch(fetchRecipes(limit, offset));
+    dispatch(fetchRecipes(limit, offset, searchVal));
   }, [offset]);
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [recipes]);
+
+  useEffect(() => {
+    dispatch(fetchRecipes(limit, offset, searchVal, true));
+    setOffset(0);
+  }, [searchVal]);
 
   const onScroll = () => {
     const scrollTop = document.documentElement.scrollTop;
@@ -58,6 +63,8 @@ function Dashboard(): JSX.Element {
     ));
   };
 
+  const sectionTitle = searchVal !== '' ? `Przepisy: ${searchVal}` : "Wszystkie przepisy"
+
   return (
     <Container>
       <div className={classes.dashboard}>
@@ -71,7 +78,7 @@ function Dashboard(): JSX.Element {
         </section>
 
         <section>
-          <h2>Wszystkie przepisy</h2>
+          <h2>{sectionTitle}</h2>
           <div className={classes.recipes}>
             {renderedRecipes()}
           </div>

@@ -13,10 +13,10 @@ router.get("/recipes", (req, res) => {
   const limit = req.query.limit && typeof req.query.limit === "string" ? parseInt(req.query.limit) : 20;
   const offset = req.query.offset && typeof req.query.offset === "string" ? parseInt(req.query.offset) : 0;
 
-  if (req.query.search && req.query.search !== "")
+  if (req.query.search && typeof req.query && req.query.search !== "")
     recipeService.getRecipesByTitle(req.query.search.toString(), limit, offset)
       .then((recipes) => res.status(200).json(recipes));
-
+  else
   recipeService.getAll(limit, offset)
     .then((recipes) => res.status(200).json(recipes));
 });

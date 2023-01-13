@@ -36,18 +36,19 @@ export class RecipeService {
   getRecipesByTitle(title: string, limit = 20, offset = 0) {
     return Recipe.findAndCountAll({
       where: {
-          title: {
-              [Op.like]: `%${title}%`
-            }
-        },
+        title: {
+          [Op.like]: `%${title}%`
+        }
+      },
       limit: limit,
       offset: offset
-    })
-      .then((recipes) => {
-        recipes.rows.map((recipe) => {
-          this._parseRecipe(recipe);
-        });
+    }).then((recipes) => {
+      recipes.rows.map((recipe) => {
+        this._parseRecipe(recipe);
       });
+
+      return recipes;
+    });
   }
 
   _parseRecipe(recipe: RecipeModel | RecipeAddModel) {

@@ -1,19 +1,24 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { recipesSlice } from "../reducers/recipesSlice";
+import { recipesSlice, recipesWithClearSuccess } from "../reducers/recipesSlice";
 import axios from "axios";
 
 const { recipesSuccess, hasError} = recipesSlice.actions;
 
-export const fetchRecipes = (limit: number, offset: number) => async (dispatch: Dispatch) => {
+export const fetchRecipes = (limit: number, offset: number, searchVal = '', clearArray = false) => async (dispatch: Dispatch) => {
   try {
-    await axios.get(`/api/recipes?limit=${limit}&offset=${offset}`, {
+    const searchParam = searchVal !== '' ? `&search=${searchVal}` : '';
+    await axios.get(`/api/recipes?limit=${limit}&offset=${offset}${searchParam}`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => dispatch(recipesSuccess(response.data)));
+      .then(response => {
+        if (clearArray)
+          dispatch(recipesWithClearSuccess(response.data))
+        else
+          dispatch(recipesSuccess(response.data))
+      });
   } catch (e: any) {
        dispatch(hasError(e.message))
   }
 };
-

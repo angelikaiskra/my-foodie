@@ -23,9 +23,12 @@ export const recipesSlice = createSlice({
         count: action.payload.count
       };
     },
+    recipesWithClearSuccess: (state, action: PayloadAction<IRecipesObject>) => {
+      state.recipes = action.payload;
+    },
   }
 });
 
-export const { hasError, recipesSuccess } = recipesSlice.actions
+export const { hasError, recipesSuccess, recipesWithClearSuccess } = recipesSlice.actions
 
 export default recipesSlice.reducer
