@@ -7,7 +7,7 @@ export interface RecipeAddModel {
   thumbnail: string,
   prepTime: number,
   slug: string,
-  type: "śniadanie" | "lunch" | "obiad" | "kolacja",
+  type: "sniadanie" | "lunch" | "obiad" | "kolacja",
   tags?: string | string[],
   ingredients: string | string[],
   steps: string | string[],
@@ -20,7 +20,7 @@ export interface RecipeModel extends Sequelize.Model<RecipeModel, RecipeAddModel
   thumbnail: string,
   prepTime: number,
   slug: string,
-  type: "śniadanie" | "lunch" | "obiad" | "kolacja",
+  type: "sniadanie" | "lunch" | "obiad" | "kolacja",
   tags?: string | string[],
   ingredients: string | string[],
   steps: string | string[],
@@ -37,7 +37,7 @@ export const Recipe = sequelize.define<RecipeModel, RecipeAddModel>('recipe', {
   thumbnail: Sequelize.STRING,
   prepTime: Sequelize.INTEGER,
   slug: Sequelize.STRING,
-  type: Sequelize.ENUM('śniadanie', 'obiad', 'lunch', 'kolacja'),
+  type: Sequelize.ENUM('sniadanie', 'obiad', 'lunch', 'kolacja'),
   tags: {
     type: Sequelize.STRING,
     allowNull: true

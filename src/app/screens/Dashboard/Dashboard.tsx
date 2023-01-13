@@ -10,7 +10,8 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterBox from "../../components/FilterBox/FilterBox";
 import RecipeBox from "../../components/RecipeBox/RecipeBox";
 
-const limit = 20;
+const limitRecipes = 20;
+const scrollOffset = 300;
 
 function Dashboard(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -18,9 +19,10 @@ function Dashboard(): JSX.Element {
 
   const [offset, setOffset] = useState(0);
   const [searchVal, setSearchVal] = useState("");
+  const [recipeType, setRecipeType] = useState("");
 
   useEffect(() => {
-    dispatch(fetchRecipes(limit, offset, searchVal));
+    dispatch(fetchRecipes(limitRecipes, 0, '', '', true));
   }, []);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function Dashboard(): JSX.Element {
     if (recipes.count !== 0 && recipes.count < offset) return;
 
     console.log("load more recipes, offset " + offset);
-    dispatch(fetchRecipes(limit, offset, searchVal));
+    dispatch(fetchRecipes(limitRecipes, offset, searchVal, recipeType));
   }, [offset]);
 
   useEffect(() => {
@@ -39,21 +41,36 @@ function Dashboard(): JSX.Element {
   }, [recipes]);
 
   useEffect(() => {
-    dispatch(fetchRecipes(limit, offset, searchVal, true));
+    if (searchVal === "") return;
+
+    setRecipeType("");
     setOffset(0);
+    dispatch(fetchRecipes(limitRecipes, 0, searchVal, "", true));
   }, [searchVal]);
 
   const onScroll = () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-    const scrollOffset = 300;
-    const scrollHeight = document.documentElement.scrollHeight - scrollOffset;
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    const calculatedScrollHeight = scrollHeight - scrollOffset;
 
-    if (scrollTop + clientHeight >= scrollHeight)
-      setOffset(offset + limit);
+    if (scrollTop + clientHeight >= calculatedScrollHeight)
+      setOffset(offset + limitRecipes);
   };
 
-  const renderedRecipes = () => {
+  const onFilterBoxClicked = (type: string) => {
+    setRecipeType(type);
+    setSearchVal("");
+    setOffset(0);
+    dispatch(fetchRecipes(limitRecipes, 0, "", type, true));
+  };
+
+  const clearFilters = () => {
+    setRecipeType("");
+    setSearchVal("");
+    setOffset(0);
+    dispatch(fetchRecipes(limitRecipes, 0));
+  };
+
+  const getRecipes = () => {
     return recipes.rows.map((recipe: IRecipe) => (
       <RecipeBox key={recipe.id}
                  title={recipe.title}
@@ -63,7 +80,21 @@ function Dashboard(): JSX.Element {
     ));
   };
 
-  const sectionTitle = searchVal !== '' ? `Przepisy: ${searchVal}` : "Wszystkie przepisy"
+  const getSectionTitle = () => {
+    if (searchVal !== "")
+      return `Przepisy dla frazy: ${searchVal}`;
+
+    if (recipeType !== "")
+      return `Przepisy według typu: ${recipeType}`;
+
+    return "Wszystkie przepisy";
+  };
+
+  const getClearIcon = () => {
+    if (recipeType !== "" || searchVal !== "")
+      return <span className={classes.clearIcon} onClick={() => clearFilters()} />;
+    return null;
+  };
 
   return (
     <Container>
@@ -71,16 +102,20 @@ function Dashboard(): JSX.Element {
         <SearchBar val={searchVal} setVal={(val) => setSearchVal(val)} />
 
         <section className={classes.filterBoxes}>
-          <FilterBox title={"Śniadanie"} imageUrl={"/img/breakfast.png"} />
-          <FilterBox title={"Obiad"} imageUrl={"/img/mainDish.png"} />
-          <FilterBox title={"Lunch"} imageUrl={"/img/lunch.png"} />
-          <FilterBox title={"Kolacja"} imageUrl={"/img/dinner.png"} />
+          <FilterBox title={"Śniadanie"} imageUrl={"/img/breakfast.png"}
+                     onFilterBoxClicked={() => onFilterBoxClicked("sniadanie")} />
+          <FilterBox title={"Obiad"} imageUrl={"/img/mainDish.png"}
+                     onFilterBoxClicked={() => onFilterBoxClicked("obiad")} />
+          <FilterBox title={"Lunch"} imageUrl={"/img/lunch.png"}
+                     onFilterBoxClicked={() => onFilterBoxClicked("lunch")} />
+          <FilterBox title={"Kolacja"} imageUrl={"/img/dinner.png"}
+                     onFilterBoxClicked={() => onFilterBoxClicked("kolacja")} />
         </section>
 
         <section>
-          <h2>{sectionTitle}</h2>
+          <h2>{getSectionTitle()} {getClearIcon()}</h2>
           <div className={classes.recipes}>
-            {renderedRecipes()}
+            {getRecipes()}
           </div>
         </section>
 

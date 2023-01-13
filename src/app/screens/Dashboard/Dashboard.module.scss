@@ -45,4 +45,12 @@
     }
   }
 
+  .clearIcon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../assets/img/icon_close_round.png");
+    cursor: pointer;
+  }
+
 }

@@ -51,6 +51,24 @@ export class RecipeService {
     });
   }
 
+  getRecipesByType(type: string, limit = 20, offset = 0) {
+    return Recipe.findAndCountAll({
+      where: {
+        type: {
+          [Op.like]: type
+        }
+      },
+      limit: limit,
+      offset: offset
+    }).then((recipes) => {
+      recipes.rows.map((recipe) => {
+        this._parseRecipe(recipe);
+      });
+
+      return recipes;
+    });
+  }
+
   _parseRecipe(recipe: RecipeModel | RecipeAddModel) {
     if (recipe.tags && typeof recipe.tags === "string")
       recipe.tags = recipe.tags.split("|");
