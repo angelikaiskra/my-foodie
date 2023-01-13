@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IRecipe } from "../../types/type";
 import { fetchRecipes } from "../../actions/recipesActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -14,9 +14,32 @@ function Dashboard(): JSX.Element {
   const dispatch = useAppDispatch();
   const { recipes, isLoading } = useAppSelector(state => state.recipes)
 
+  // const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const [searchVal, setSearchVal] = useState("")
+
   useEffect(() => {
-       dispatch(fetchRecipes());
+       dispatch(fetchRecipes(page));
      }, [dispatch]);
+
+  useEffect(() => {
+    console.log("load more recipes, page ", page)
+  }, [page]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [recipes])
+
+  const onScroll = () => {
+    const scrollTop = document.documentElement.scrollTop
+    const clientHeight = document.documentElement.clientHeight
+    const offset = 300
+    const scrollHeight = document.documentElement.scrollHeight - offset
+
+    if (scrollTop + clientHeight >= scrollHeight)
+      setPage(page + 1)
+  }
 
   const renderedRecipes = () => {
     if (isLoading) {
@@ -35,13 +58,13 @@ function Dashboard(): JSX.Element {
   return (
     <Container>
       <div className={classes.dashboard}>
-        <SearchBar />
+        <SearchBar val={searchVal} setVal={(val) => setSearchVal(val)} />
 
         <section className={classes.filterBoxes}>
-          <FilterBox title={"Śniadanie"} imageUrl={"http://localhost:3001/assets/img/breakfast.png"} />
-          <FilterBox title={"Obiad"} imageUrl={"http://localhost:3001/assets/img/mainDish.png"} />
-          <FilterBox title={"Lunch"} imageUrl={"http://localhost:3001/assets/img/lunch.png"} />
-          <FilterBox title={"Kolacja"} imageUrl={"http://localhost:3001/assets/img/dinner.png"} />
+          <FilterBox title={"Śniadanie"} imageUrl={"/img/breakfast.png"} />
+          <FilterBox title={"Obiad"} imageUrl={"/img/mainDish.png"} />
+          <FilterBox title={"Lunch"} imageUrl={"/img/lunch.png"} />
+          <FilterBox title={"Kolacja"} imageUrl={"/img/dinner.png"} />
         </section>
 
         <section>

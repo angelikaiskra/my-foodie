@@ -16,7 +16,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       '^/img': {
-        target: `http://localhost:${PORT}/assets/img/`
+        target: `http://localhost:${PORT}/assets/`
       },
     },
   },
