@@ -5,17 +5,22 @@ export class RecipeService {
 
   add(recipe: RecipeAddModel) {
     return Recipe.create(this._parseRecipe(recipe))
-      .then(recipe => {return recipe});
+      .then(recipe => {
+        return recipe;
+      });
   }
 
-  getAll() {
-    return Recipe.findAll().then((recipes) => {
-      recipes.map((recipe) => {
-        this._parseRecipe(recipe)
-      })
+  getAll(limit = 20, offset = 0) {
+    return Recipe.findAndCountAll({
+      limit: limit,
+      offset: offset
+    }).then((recipes) => {
+      recipes.rows.map((recipe) => {
+        this._parseRecipe(recipe);
+      });
 
       return recipes;
-    })
+    });
   }
 
   getRecipeBySlug(slug: string) {
@@ -25,16 +30,24 @@ export class RecipeService {
           return this._parseRecipe(recipe);
 
         return {};
-      })
+      });
   }
 
-  getRecipesByTitle(title: string) {
-    return Recipe.findAll({ where: { title: { [Op.like]: `%${title}%` } } })
+  getRecipesByTitle(title: string, limit = 20, offset = 0) {
+    return Recipe.findAndCountAll({
+      where: {
+          title: {
+              [Op.like]: `%${title}%`
+            }
+        },
+      limit: limit,
+      offset: offset
+    })
       .then((recipes) => {
-        recipes.map((recipe) => {
-          this._parseRecipe(recipe)
-        })
-      })
+        recipes.rows.map((recipe) => {
+          this._parseRecipe(recipe);
+        });
+      });
   }
 
   _parseRecipe(recipe: RecipeModel | RecipeAddModel) {
