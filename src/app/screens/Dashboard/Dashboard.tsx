@@ -10,50 +10,53 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterBox from "../../components/FilterBox/FilterBox";
 import RecipeBox from "../../components/RecipeBox/RecipeBox";
 
+const limit = 20;
+
 function Dashboard(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { recipes, isLoading } = useAppSelector(state => state.recipes)
+  const { recipes } = useAppSelector(state => state.recipes);
 
-  // const [hasMore, setHasMore] = useState(true)
-  const [page, setPage] = useState(1)
-  const [searchVal, setSearchVal] = useState("")
-
-  useEffect(() => {
-       dispatch(fetchRecipes(page));
-     }, [dispatch]);
+  const [offset, setOffset] = useState(0);
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    console.log("load more recipes, page ", page)
-  }, [page]);
+    dispatch(fetchRecipes(limit, offset));
+  }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [recipes])
+    if (offset === 0) return;
+
+    // return if already loaded all recipes
+    if (recipes.count !== 0 && recipes.count < offset) return;
+
+    console.log("load more recipes, offset " + offset);
+    dispatch(fetchRecipes(limit, offset));
+  }, [offset]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [recipes]);
 
   const onScroll = () => {
-    const scrollTop = document.documentElement.scrollTop
-    const clientHeight = document.documentElement.clientHeight
-    const offset = 300
-    const scrollHeight = document.documentElement.scrollHeight - offset
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    const scrollOffset = 300;
+    const scrollHeight = document.documentElement.scrollHeight - scrollOffset;
 
     if (scrollTop + clientHeight >= scrollHeight)
-      setPage(page + 1)
-  }
+      setOffset(offset + limit);
+  };
 
   const renderedRecipes = () => {
-    if (isLoading) {
-      return <div>Loading...</div>
-    } else {
-      return recipes.map((recipe: IRecipe) => (
-        <RecipeBox key={recipe.id}
-                   title={recipe.title}
-                   imageUrl={recipe.thumbnail}
-                   prepTime={recipe.prepTime} link={`/przepis/${recipe.slug}`}
-        />
-      ))
-    }
-  }
+    return recipes.rows.map((recipe: IRecipe) => (
+      <RecipeBox key={recipe.id}
+                 title={recipe.title}
+                 imageUrl={recipe.thumbnail}
+                 prepTime={recipe.prepTime} link={`/przepis/${recipe.slug}`}
+      />
+    ));
+  };
 
   return (
     <Container>

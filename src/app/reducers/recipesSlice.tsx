@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRecipe, IRecipesState } from "../types/type";
+import { IRecipesObject, IRecipesState } from "../types/type";
 
 const initialState: IRecipesState = {
-  recipes: [],
-  isLoading: false,
+  recipes: {
+    rows: [],
+    count: 0
+  },
   error: {}
 };
 
@@ -12,20 +14,18 @@ export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
-    startLoading: state => {
-      state.isLoading = true;
-    },
     hasError: (state, action: PayloadAction<object>) => {
       state.error = action.payload;
-      state.isLoading = false;
     },
-    recipesSuccess: (state, action: PayloadAction<IRecipe[]>) => {
-      state.recipes = action.payload;
-      state.isLoading = false;
-    }
+    recipesSuccess: (state, action: PayloadAction<IRecipesObject>) => {
+      state.recipes = {
+        rows: [...state.recipes.rows, ...action.payload.rows],
+        count: action.payload.count
+      };
+    },
   }
 });
 
-export const { startLoading, hasError, recipesSuccess } = recipesSlice.actions
+export const { hasError, recipesSuccess } = recipesSlice.actions
 
 export default recipesSlice.reducer

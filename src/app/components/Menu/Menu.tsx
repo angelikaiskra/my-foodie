@@ -32,11 +32,6 @@ function Menu(): JSX.Element {
         <LinkItem iconName={"new"}
                   url={"/nowy-przepis"}
                   title={"Nowy przepis"} />
-
-        <LinkItem iconName={"cart"}
-                  iconProps={{ height: 25 }}
-                  url={"/lista-zakupow"}
-                  title={"Lista zakupów"} />
       </nav>
 
     </header>

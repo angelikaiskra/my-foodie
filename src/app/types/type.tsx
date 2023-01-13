@@ -11,8 +11,12 @@ export interface IRecipe {
   photos: string[],
 }
 
+export interface IRecipesObject {
+    rows: IRecipe[],
+    count: number
+}
+
 export interface IRecipesState {
-  recipes: IRecipe[],
-  isLoading: boolean,
+  recipes: IRecipesObject,
   error: object
 }

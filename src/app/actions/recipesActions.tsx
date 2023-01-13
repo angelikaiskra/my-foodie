@@ -2,12 +2,11 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { recipesSlice } from "../reducers/recipesSlice";
 import axios from "axios";
 
-const { recipesSuccess, startLoading, hasError} = recipesSlice.actions;
+const { recipesSuccess, hasError} = recipesSlice.actions;
 
-export const fetchRecipes = (page: number) => async (dispatch: Dispatch) => {
-    dispatch(startLoading());
+export const fetchRecipes = (limit: number, offset: number) => async (dispatch: Dispatch) => {
   try {
-    await axios.get(`/api/recipes?page=${page}`, {
+    await axios.get(`/api/recipes?limit=${limit}&offset=${offset}`, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -17,3 +16,4 @@ export const fetchRecipes = (page: number) => async (dispatch: Dispatch) => {
        dispatch(hasError(e.message))
   }
 };
+
