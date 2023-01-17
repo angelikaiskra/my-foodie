@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import { useParams, useNavigate  } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import classes from "./SingleRecipe.module.scss";
 
 import Container from "../../components/Container/Container";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchRecipeBySlug, deleteRecipe } from "../../actions/recipesActions";
+import { deleteRecipe, fetchRecipeBySlug } from "../../actions/recipesActions";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Tag from "../../components/Tag/Tag";
 import Button from "../../components/Button/Button";
-import { ButtonTypes } from "../../types/type";
+import { ButtonTypes, TitleTypes } from "../../types/type";
+import Title from "../../components/Title/Title";
 
 function SingleRecipe(): JSX.Element {
   const navigate = useNavigate();
@@ -48,16 +49,14 @@ function SingleRecipe(): JSX.Element {
 
   const onDeleteClicked = () => {
     dispatch(deleteRecipe(recipe.id))
-      .then(() => {
-        navigate('/');
-      })
+      .then(() => navigate('/'))
   }
 
   return (
     <Container>
       {!recipe.id ? <LoadingSpinner /> :
         <div className={classes.singleRecipe}>
-          <h1>{recipe.title}</h1>
+          <Title type={TitleTypes.large}>{recipe.title}</Title>
 
           <section className={classes.tags}>
             {renderTags()}
@@ -65,7 +64,7 @@ function SingleRecipe(): JSX.Element {
 
           <section className={classes.textsContainer}>
             <div className={classes.ingredients}>
-              <h2>Składniki</h2>
+              <Title>Składniki</Title>
 
               <ul>
                 {renderIngredients()}
@@ -73,7 +72,7 @@ function SingleRecipe(): JSX.Element {
             </div>
 
             <div className={classes.steps}>
-              <h2>Przygotowanie</h2>
+              <Title>Przygotowanie</Title>
 
               <ol>
                 {renderSteps()}
@@ -82,7 +81,7 @@ function SingleRecipe(): JSX.Element {
           </section>
 
           <section className={classes.photos}>
-            <h2>Zdjęcia</h2>
+            <Title>Zdjęcia</Title>
 
             <div>
               {renderPhotos()}

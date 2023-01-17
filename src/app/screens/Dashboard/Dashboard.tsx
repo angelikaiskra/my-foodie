@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IRecipe } from "../../types/type";
+import { IRecipe, TitleTypes } from "../../types/type";
 import { fetchRecipes } from "../../actions/recipesActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
@@ -9,6 +9,7 @@ import Container from "../../components/Container/Container";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterBox from "../../components/FilterBox/FilterBox";
 import RecipeBox from "../../components/RecipeBox/RecipeBox";
+import Title from "../../components/Title/Title";
 
 const limitRecipes = 20;
 const scrollOffset = 300;
@@ -113,7 +114,7 @@ function Dashboard(): JSX.Element {
         </section>
 
         <section>
-          <h2>{getSectionTitle()} {getClearIcon()}</h2>
+          <Title type={TitleTypes.large}>{getSectionTitle()} {getClearIcon()}</Title>
           <div className={classes.recipes}>
             {getRecipes()}
           </div>
