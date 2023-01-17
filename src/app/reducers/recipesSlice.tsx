@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRecipe, IRecipesObject, IRecipesState } from "../types/type";
+import { IRecipe, IRecipesObject, IRecipesState } from "../types/recipes";
 
 const initialState: IRecipesState = {
   recipes: {

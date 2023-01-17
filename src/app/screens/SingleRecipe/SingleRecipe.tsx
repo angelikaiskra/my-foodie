@@ -9,8 +9,8 @@ import { deleteRecipe, fetchRecipeBySlug } from "../../actions/recipesActions";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Tag from "../../components/Tag/Tag";
 import Button from "../../components/Button/Button";
-import { ButtonTypes, TitleTypes } from "../../types/type";
 import Title from "../../components/Title/Title";
+import { ButtonTypes, TitleTypes } from "../../types/components";
 
 function SingleRecipe(): JSX.Element {
   const navigate = useNavigate();
@@ -21,36 +21,36 @@ function SingleRecipe(): JSX.Element {
   useEffect(() => {
     if (searchParams.slug && searchParams.slug !== "")
       dispatch(fetchRecipeBySlug(searchParams.slug));
-  }, [])
+  }, []);
 
   const renderTags = () => {
-      return recipe.tags.map((tag, index) => {
-        return <Tag text={tag} key={index} />
-      })
-  }
+    return recipe.tags.map((tag: string, index: number) => {
+      return <Tag text={tag} key={index} />;
+    });
+  };
 
   const renderIngredients = () => {
-    return recipe.ingredients.map((ingredient, index) => {
-      return <li key={index}>{ingredient}</li>
-    })
-  }
+    return recipe.ingredients.map((ingredient: string, index: number) => {
+      return <li key={index}>{ingredient}</li>;
+    });
+  };
 
   const renderSteps = () => {
-    return recipe.steps.map((step, index) => {
-      return <li key={index}>{step}</li>
-    })
-  }
+    return recipe.steps.map((step: string, index: number) => {
+      return <li key={index}>{step}</li>;
+    });
+  };
 
   const renderPhotos = () => {
-    return recipe.photos.map((photo, index) => {
-      return <img src={photo} alt={"Zdjęcie przepisu"} key={index} />
-    })
-  }
+    return recipe.photos.map((photo: string, index: number) => {
+      return <img src={photo} alt={"Zdjęcie przepisu"} key={index} />;
+    });
+  };
 
   const onDeleteClicked = () => {
     dispatch(deleteRecipe(recipe.id))
-      .then(() => navigate('/'))
-  }
+      .then(() => navigate("/"));
+  };
 
   return (
     <Container>
@@ -65,27 +65,18 @@ function SingleRecipe(): JSX.Element {
           <section className={classes.textsContainer}>
             <div className={classes.ingredients}>
               <Title>Składniki</Title>
-
-              <ul>
-                {renderIngredients()}
-              </ul>
+              <ul>{renderIngredients()}</ul>
             </div>
 
             <div className={classes.steps}>
               <Title>Przygotowanie</Title>
-
-              <ol>
-                {renderSteps()}
-              </ol>
+              <ol>{renderSteps()}</ol>
             </div>
           </section>
 
           <section className={classes.photos}>
             <Title>Zdjęcia</Title>
-
-            <div>
-              {renderPhotos()}
-            </div>
+            <div>{renderPhotos()}</div>
           </section>
 
           <section className={classes.actions}>

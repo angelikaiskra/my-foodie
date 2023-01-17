@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { IRecipe, TitleTypes } from "../../types/type";
 import { fetchRecipes } from "../../actions/recipesActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
@@ -10,6 +9,8 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterBox from "../../components/FilterBox/FilterBox";
 import RecipeBox from "../../components/RecipeBox/RecipeBox";
 import Title from "../../components/Title/Title";
+import { IRecipe } from "../../types/recipes";
+import { TitleTypes } from "../../types/components";
 
 const limitRecipes = 20;
 const scrollOffset = 300;
@@ -23,7 +24,7 @@ function Dashboard(): JSX.Element {
   const [recipeType, setRecipeType] = useState("");
 
   useEffect(() => {
-    dispatch(fetchRecipes(limitRecipes, 0, '', '', true));
+    dispatch(fetchRecipes(limitRecipes));
   }, []);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function Dashboard(): JSX.Element {
     if (recipes.count !== 0 && recipes.count <= offset) return;
 
     console.log("load more recipes, offset " + offset);
-    dispatch(fetchRecipes(limitRecipes, offset, searchVal, recipeType));
+    dispatch(fetchRecipes(limitRecipes, offset, searchVal, recipeType, true));
   }, [offset]);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function Dashboard(): JSX.Element {
 
     setRecipeType("");
     setOffset(0);
-    dispatch(fetchRecipes(limitRecipes, 0, searchVal, "", true));
+    dispatch(fetchRecipes(limitRecipes, 0, searchVal));
   }, [searchVal]);
 
   const onScroll = () => {
@@ -61,14 +62,14 @@ function Dashboard(): JSX.Element {
     setRecipeType(type);
     setSearchVal("");
     setOffset(0);
-    dispatch(fetchRecipes(limitRecipes, 0, "", type, true));
+    dispatch(fetchRecipes(limitRecipes, 0, "", type));
   };
 
   const clearFilters = () => {
     setRecipeType("");
     setSearchVal("");
     setOffset(0);
-    dispatch(fetchRecipes(limitRecipes, 0, "", "", true));
+    dispatch(fetchRecipes(limitRecipes));
   };
 
   const getRecipes = () => {

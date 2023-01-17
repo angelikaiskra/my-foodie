@@ -21,13 +21,3 @@ export interface IRecipesState {
   recipe: IRecipe | Record<string, never>,
   error: object
 }
-
-export enum ButtonTypes {
-  primary = "primary",
-  danger = "danger"
-}
-
-export enum TitleTypes {
-  large = "large",
-  medium = "medium"
-}

@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { TitleTypes } from "../../types/type";
+import { TitleTypes } from "../../types/components";
 
 import classes from "./Title.module.scss";
 

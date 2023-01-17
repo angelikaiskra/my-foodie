@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonTypes } from "../../types/type";
+import { ButtonTypes } from "../../types/components";
 
 import classes from "./Button.module.scss";
 

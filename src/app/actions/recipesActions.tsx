@@ -6,10 +6,10 @@ const { recipesSuccess, hasError } = recipesSlice.actions;
 
 export const fetchRecipes = (
   limit: number,
-  offset: number,
+  offset = 0,
   searchVal = "",
   type = "",
-  clearArray = false
+  appendToArray = false
 ) => async (dispatch: Dispatch) => {
 
   try {
@@ -24,10 +24,10 @@ export const fetchRecipes = (
       }
     })
       .then(response => {
-        if (clearArray)
-          dispatch(recipesWithClearSuccess(response.data));
-        else
+        if (appendToArray)
           dispatch(recipesSuccess(response.data));
+        else
+          dispatch(recipesWithClearSuccess(response.data));
       });
   } catch (e: any) {
     dispatch(hasError(e.message));
