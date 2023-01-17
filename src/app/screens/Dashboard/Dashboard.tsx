@@ -29,7 +29,7 @@ function Dashboard(): JSX.Element {
     if (offset === 0) return;
 
     // return if already loaded all recipes
-    if (recipes.count !== 0 && recipes.count < offset) return;
+    if (recipes.count !== 0 && recipes.count <= offset) return;
 
     console.log("load more recipes, offset " + offset);
     dispatch(fetchRecipes(limitRecipes, offset, searchVal, recipeType));
@@ -67,7 +67,7 @@ function Dashboard(): JSX.Element {
     setRecipeType("");
     setSearchVal("");
     setOffset(0);
-    dispatch(fetchRecipes(limitRecipes, 0));
+    dispatch(fetchRecipes(limitRecipes, 0, "", "", true));
   };
 
   const getRecipes = () => {
@@ -118,7 +118,6 @@ function Dashboard(): JSX.Element {
             {getRecipes()}
           </div>
         </section>
-
 
       </div>
     </Container>

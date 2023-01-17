@@ -1,10 +1,15 @@
 // COLORS
-$color-border-gray: #EDF1F4;
+$color-gray: #EDF1F4;
+$color-darker-gray: #DAE0E4;
 $color-background-gray: #F7F9F9;
 
+$color-blue-gray: #AAB9C3;
 $color-violet: #9891B6;
 $color-dark-violet: #6D5CAC;
 $color-dark: #172938;
+
+$color-button-primary: #FB9400;
+$color-button-danger: #FF584E;
 
 // BREAKPOINTS
 // Small tablets and large smartphones (landscape view)
@@ -20,11 +25,15 @@ $screen-lg-min: 992px;
 $screen-xl-min: 1200px;
 
 :export {
-  color-border-gray: $color-border-gray;
+  color-gray: $color-gray;
+  color-darker-gray: $color-darker-gray;
   color-background-gray: $color-background-gray;
-  color-font-violet: $color-violet;
-  color-font-dark-violet: $color-dark-violet;
-  color-font-dark: $color-dark;
+  color-blue-gray: $color-blue-gray;
+  color-violet: $color-violet;
+  color-dark-violet: $color-dark-violet;
+  color-dark: $color-dark;
+  color-button-primary: $color-button-primary;
+  color-button-danger: $color-button-danger;
   screen-sm-min: $screen-sm-min;
   screen-md-min: $screen-md-min;
   screen-lg-min: $screen-lg-min;

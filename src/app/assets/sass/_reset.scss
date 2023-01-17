@@ -24,11 +24,6 @@ a, button {
   cursor: revert;
 }
 
-/* Remove list styles (bullets/numbers) */
-ol, ul, menu {
-  list-style: none;
-}
-
 /* For images to not be able to exceed their container */
 img {
   max-inline-size: 100%;
@@ -64,11 +59,6 @@ pre {
 /* reset default text opacity of input placeholder */
 ::placeholder {
   color: unset;
-}
-
-/* remove default dot (•) sign */
-::marker {
-  content: "";
 }
 
 /* fix the feature of 'hidden' attribute.

@@ -69,6 +69,14 @@ export class RecipeService {
     });
   }
 
+  delete(id: string) {
+    return Recipe.destroy({
+      where: {
+        id: id
+      }
+    })
+  }
+
   _parseRecipe(recipe: RecipeModel | RecipeAddModel) {
     if (recipe.tags && typeof recipe.tags === "string")
       recipe.tags = recipe.tags.split("|");

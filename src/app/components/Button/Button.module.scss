@@ -1,9 +1,27 @@
+@import "../../assets/sass/index";
+
 .button {
-  color: #000;
-  background: linear-gradient(180deg, #ffbb3b, #ffa90a);
-  font-size: 0.8em;
-  padding: 0.8em 2em;
+  color: #FFFFFF;
+  padding: 10px 20px;
   border: none;
-  border-radius: 0.4em;
-  text-transform: uppercase;
+  border-radius: 15px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
+  cursor: pointer;
+  transition: background-color .2s ease-in-out;
+
+  &--primary {
+    background-color: $color-button-primary;
+
+    &:hover {
+      background-color: #c47300;
+    }
+  }
+
+  &--danger {
+    background-color: $color-button-danger;
+
+    &:hover {
+      background-color: #d04b41;
+    }
+  }
 }

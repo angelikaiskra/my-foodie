@@ -1,0 +1,10 @@
+@import "../../assets/sass/index";
+
+.tag {
+  display: inline-block;
+  background-color: $color-darker-gray;
+  color: $color-dark;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 15px;
+}

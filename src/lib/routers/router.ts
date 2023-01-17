@@ -13,8 +13,6 @@ router.get("/recipes", (req, res) => {
   const limit = req.query.limit && typeof req.query.limit === "string" ? parseInt(req.query.limit) : 20;
   const offset = req.query.offset && typeof req.query.offset === "string" ? parseInt(req.query.offset) : 0;
 
-  console.log(req.query);
-
   if (req.query.search && req.query.search !== "")
     recipeService.getRecipesByTitle(req.query.search.toString(), limit, offset)
       .then((recipes) => res.status(200).json(recipes));
@@ -33,6 +31,13 @@ router.get("/recipe/:slug", (req, res) => {
 router.post("/recipe/add", (req, res) => {
   recipeService.add(req.body)
     .then((recipe) => res.status(200).json(recipe));
+});
+
+router.delete("/recipe/:id", (req, res) => {
+  recipeService.delete(req.params.id)
+    .then(() => res.status(200).json({
+      success: true,
+    }));
 });
 
 export default router;

@@ -1,12 +1,20 @@
-import React, { ReactNode } from 'react';
-import classes from './Button.module.scss';
+import React from "react";
+import { ButtonTypes } from "../../types/type";
+
+import classes from "./Button.module.scss";
 
 interface IButtonProps {
-  children: ReactNode;
+  text: string;
+  onClick: () => void,
+  type?: ButtonTypes;
 }
 
-function Button({ children }: IButtonProps): JSX.Element {
-  return <button className={classes.button}>{children}</button>;
+function Button({ text, onClick, type = ButtonTypes.primary }: IButtonProps): JSX.Element {
+  return <button
+    className={`${classes.button} ${classes["button--" + type]}`}
+    onClick={() => onClick()}>
+    {text}
+  </button>;
 }
 
 export default Button;

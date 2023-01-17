@@ -18,5 +18,11 @@ export interface IRecipesObject {
 
 export interface IRecipesState {
   recipes: IRecipesObject,
+  recipe: IRecipe | Record<string, never>,
   error: object
+}
+
+export enum ButtonTypes {
+  primary = "primary",
+  danger = "danger"
 }
